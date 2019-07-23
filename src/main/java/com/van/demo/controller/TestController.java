@@ -30,4 +30,9 @@ public class TestController {
         List<Name> nameList = testMapper.getNameList();
         return nameList;
     }
+
+    @GetMapping("time")
+    public Object getTime() {
+        return System.currentTimeMillis();
+    }
 }
