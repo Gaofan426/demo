@@ -33,6 +33,6 @@ public class TestController {
 
     @GetMapping("time")
     public Object getTime() {
-        return System.currentTimeMillis();
+        return "当前时间：" + System.currentTimeMillis();
     }
 }
