@@ -4,9 +4,7 @@ import com.van.demo.dao.mapper.TestMapper;
 import com.van.demo.dto.Name;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +32,11 @@ public class TestController {
     @GetMapping("time")
     public Object getTime() {
         return "当前时间：" + System.currentTimeMillis();
+    }
+
+    @PostMapping
+    public Object insertName(@RequestParam(value = "name") String name) {
+        testMapper.insertName(name);
+        return getNameList();
     }
 }
