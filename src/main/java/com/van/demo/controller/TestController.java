@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,7 +33,8 @@ public class TestController {
 
     @GetMapping("time")
     public Object getTime() {
-        return "当前时间：" + System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return "当前时间：" + sdf.format(new Date());
     }
 
     @PostMapping
