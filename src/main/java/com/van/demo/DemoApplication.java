@@ -20,7 +20,7 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @Bean
+//    @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         HTTPBasicAuthorizeAttribute httpBasicFilter = new HTTPBasicAuthorizeAttribute();
