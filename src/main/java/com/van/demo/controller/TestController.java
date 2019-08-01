@@ -53,7 +53,7 @@ public class TestController {
 
     @RequestMapping(value = "/png",produces = MediaType.IMAGE_JPEG_VALUE)
     public Object aaa() throws IOException {
-        File file = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "static/refund.png");
+        File file = ResourceUtils.getFile("file:src/main/resources/static/refund.png");
         boolean exists = file.exists();
         boolean b = file.canRead();
         boolean b1 = file.canWrite();
