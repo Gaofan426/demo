@@ -1,8 +1,12 @@
 package com.van.demo.controller;
 
-import com.van.demo.dao.mapper.TestMapper;
-import com.van.demo.dto.Name;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.van.demo.dao.TestMapper;
+import com.van.demo.dao.entity.Name;
+import com.van.demo.dao.service.INameService;
 import com.van.demo.util.QrCodeUtils;
+import com.van.demo.util.ZipUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -14,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @RequestMapping("test")
@@ -26,15 +30,22 @@ public class TestController {
     @Autowired
     private TestMapper testMapper;
 
+    @Autowired
+    private INameService iNameService;
+
     @GetMapping("url")
     public Object getUrl() {
-        return "you need to skip to " + url;
+        return "you need to skip to : " + url;
     }
 
     @GetMapping("name")
     public Object getNameList() {
-        List<Name> nameList = testMapper.getNameList();
-        return nameList;
+
+        Page<Name> namePage = iNameService.selectPage(new Page<>(2,5), new EntityWrapper<>());
+
+//        PageHelper.startPage(1,10);
+//        List<Name> nameList = testMapper.getNameList();
+        return namePage;
     }
 
     @GetMapping("time")
@@ -49,14 +60,14 @@ public class TestController {
         return getNameList();
     }
 
-
-
+    /**
+     * 获取静态资源
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/png",produces = MediaType.IMAGE_JPEG_VALUE)
-    public Object aaa() throws IOException {
+    public Object getPng() throws IOException {
         File file = ResourceUtils.getFile("file:src/main/resources/static/refund.png");
-        boolean exists = file.exists();
-        boolean b = file.canRead();
-        boolean b1 = file.canWrite();
         InputStream is = new FileInputStream(file);
         byte[] bytes = new byte[is.available()];
         is.read(bytes, 0, is.available());
@@ -64,7 +75,7 @@ public class TestController {
     }
 
     /**
-     * 二维码
+     * 生成二维码
      * @param request
      * @param response
      */
@@ -77,5 +88,21 @@ public class TestController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 压缩成zip
+     * @throws IOException
+     */
+    @GetMapping("/zipFile")
+    public void zipFile() throws IOException {
+        File outFile = ResourceUtils.getFile("file:src/main/resources/static/refund.zip");
+        FileOutputStream fos = new FileOutputStream(outFile);
+        ZipOutputStream zipOut = new ZipOutputStream(fos);
+        File fileToZip = ResourceUtils.getFile("file:src/main/resources/static/refund.png");
+
+        ZipUtil.zipFile(fileToZip, fileToZip.getName(), zipOut);
+        zipOut.close();
+        fos.close();
     }
 }

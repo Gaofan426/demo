@@ -1,4 +1,4 @@
-package com.van.demo.dao.mapper;
+package com.van.demo.dao;
 
 import com.van.demo.dto.Name;
 import org.apache.ibatis.annotations.Insert;
