@@ -41,7 +41,7 @@ public class TestController {
     @GetMapping("name")
     public Object getNameList() {
 
-        Page<Name> namePage = iNameService.selectPage(new Page<>(2,5), new EntityWrapper<>());
+        Page<Name> namePage = iNameService.selectPage(new Page<>(2, 5), new EntityWrapper<>());
 
 //        PageHelper.startPage(1,10);
 //        List<Name> nameList = testMapper.getNameList();
@@ -62,10 +62,11 @@ public class TestController {
 
     /**
      * 获取静态资源
+     *
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "/png",produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = "/png", produces = MediaType.IMAGE_JPEG_VALUE)
     public Object getPng() throws IOException {
         File file = ResourceUtils.getFile("file:src/main/resources/static/refund.png");
         InputStream is = new FileInputStream(file);
@@ -76,6 +77,7 @@ public class TestController {
 
     /**
      * 生成二维码
+     *
      * @param request
      * @param response
      */
@@ -92,6 +94,7 @@ public class TestController {
 
     /**
      * 压缩成zip
+     *
      * @throws IOException
      */
     @GetMapping("/zipFile")
@@ -104,5 +107,12 @@ public class TestController {
         ZipUtil.zipFile(fileToZip, fileToZip.getName(), zipOut);
         zipOut.close();
         fos.close();
+    }
+
+    @GetMapping("builder")
+    public Object testBuilder() {
+        com.van.demo.dto.Name van = com.van.demo.dto.Name.builder().id(2).name("van").build();
+        van.toBuilder().id(3).name("v").build();
+        return van;
     }
 }

@@ -1,14 +1,12 @@
 package com.van.demo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder = true)
 public class Name {
     private Integer id;
     private String name;

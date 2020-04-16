@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: quartz-part
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: demo

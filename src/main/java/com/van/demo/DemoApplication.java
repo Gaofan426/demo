@@ -6,6 +6,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -17,6 +18,7 @@ import java.util.List;
 @EnableFeignClients("com.van")
 @MapperScan("com.van.demo.dao")
 @EnableAspectJAutoProxy
+@EnableDiscoveryClient
 public class DemoApplication {
 
     public static void main(String[] args) {

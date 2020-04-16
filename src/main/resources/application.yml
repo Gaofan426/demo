@@ -12,8 +12,23 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: Zhh@19940603
-    url: jdbc:mysql://193.112.88.125:3306/test?characterEncoding=utf8
+    password: gaofan.1994
+    url: jdbc:mysql://localhost:3306/demo?characterEncoding=utf8
+  #给项目来个名字
+  application:
+    name: rabbitmq
+  #配置rabbitMq 服务器
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: gaofan
+    password: gaofan.1994
+    #虚拟host 可以不设置,使用server默认host
+    virtual-host: VanHost
+    #确认消息已发送到交换机(Exchange)
+    publisher-confirms: true
+    #确认消息已发送到队列(Queue)
+    publisher-returns: true
 
   profiles:
     active: test
@@ -30,4 +45,13 @@ spring:
       auto-commit-interval: 1000
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+security:
+  basic:
+    enabled: false
+    path: /**    #需要basic限制的部分
+  user:
+    name: van
+    password: 426326
+    role: USER      #认证角色
 
